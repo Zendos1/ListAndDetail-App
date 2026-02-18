@@ -11,6 +11,10 @@ struct ListView: View {
     
     @StateObject var viewModel = ListViewModel()
     
+    init(viewModel: ListViewModel = ListViewModel()) {
+        _viewModel = .init(wrappedValue: viewModel)
+    }
+    
     var body: some View {
         List(viewModel.items, id: \.id) { item in
             CardView(title: item.title, subtitle: item.subtitle)
@@ -18,7 +22,7 @@ struct ListView: View {
         .onAppear {
             viewModel.fetchTitles()
         }
-        .padding()
+        .listStyle(.plain)
     }
 }
 
@@ -36,6 +40,10 @@ struct CardView: View {
     }
 }
 
+
+
 #Preview {
-    ListView()
+    let mockApiClient = MockApiClient()
+    let previewViewModel = ListViewModel(apiClient: mockApiClient)
+    ListView(viewModel: previewViewModel)
 }
