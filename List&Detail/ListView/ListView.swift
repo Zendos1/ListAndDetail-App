@@ -16,38 +16,31 @@ struct ListView: View {
     }
     
     var body: some View {
-        List(viewModel.items, id: \.postId) { item in
-            CardView(userId: item.userId,
-                     postId: item.postId,
-                     title: item.title,
-                     postbody: item.body)
+        Group {
+            if viewModel.isLoading {
+                ProgressView().controlSize(.large)
+            } else if viewModel.items.isEmpty {
+                ContentUnavailableView(Constants.ListView.emptyStateMessage,
+                                       systemImage: Style.Images.emptyStateImage)
+            }
+            else {
+                List(viewModel.items, id: \.postId) { item in
+                    CardView(userId: item.userId,
+                             postId: item.postId,
+                             title: item.title,
+                             postbody: item.body)
+                }.listStyle(.plain)
+            }
         }
-        .listStyle(.plain)
         .task {
             await viewModel.fetchAllPosts()
         }
+        .alert(viewModel.alertPresenter.title,
+               isPresented: $viewModel.alertPresenter.isPresented,
+               actions: { ListViewAlertActions(alertType: viewModel.alertPresenter.type) },
+               message: { Text(viewModel.alertPresenter.message) })
     }
 }
-
-struct CardView: View {
-    var userId: Int
-    var postId: Int
-    var title: String
-    var postbody: String
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 5) {
-            Text(Constants.ListView.userIdLabel + "\(userId)")
-            Text(Constants.ListView.postIdLabel + "\(postId)")
-            Text(title)
-                .font(.headline)
-            Text(postbody)
-                .font(.subheadline)
-        }
-    }
-}
-
-
 
 #Preview {
     let mockApiClient = MockApiClient()

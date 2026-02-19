@@ -17,26 +17,31 @@ class ApiClient: APIClientProtocol {
     private var baseUrl: URL
     
     init(urlSession: URLSession = .shared,
-         baseUrl: String = "https://jsonplaceholder.typicode.com") {
+         baseUrl: String = Constants.ApiClient.baseURL) {
         guard let baseUrl = URL(string: baseUrl) else {
-            fatalError("Invalid base URL")
+            fatalError(Constants.ApiClient.baseUrlFailure)
         }
         self.baseUrl = baseUrl
         self.urlSession = urlSession
     }
     
     func fetchAllPosts() async throws -> [AllPostsResponse] {
-        let allPostsUrl = baseUrl.appendingPathComponent("posts")
+        let allPostsUrl = baseUrl.appendingPathComponent(Constants.ApiClient.postsEndpoint)
         let request = URLRequest(url: allPostsUrl)
+        return try await makeNetworkRequest(request: request)
+    }
+    
+    func makeNetworkRequest<T: Decodable>(request: URLRequest) async throws -> T {
         let (data, response) = try await urlSession.data(for: request)
-        
         guard let statusCode = (response as? HTTPURLResponse)?.statusCode,
               (200...299).contains(statusCode) else {
-            throw NSError(domain: "No Api Response", code: 0)
+            throw NSError(domain: Constants.ApiClient.badServerResponse, code: 0)
         }
-        
-        let models = try? JSONDecoder().decode([AllPostsResponse].self, from: data)
-        return models ?? []
+        do {
+            return try JSONDecoder().decode(T.self, from: data)
+        } catch let error {
+            throw error
+        }
     }
 }
 

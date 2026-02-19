@@ -12,7 +12,13 @@ struct List_DetailApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ListView()
+//            ListView()
+            
+            /// Mocking viewmodel to test behaviours
+            let mockApiClient = MockApiClient(willFail: true,
+                                              withDelay: true)
+            let previewViewModel = ListViewModel(apiClient: mockApiClient)
+            ListView(viewModel: previewViewModel)
         }
     }
 }
