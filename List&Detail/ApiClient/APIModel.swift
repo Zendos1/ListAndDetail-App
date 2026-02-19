@@ -7,8 +7,15 @@
 
 import Foundation
 
-struct APIModel: Identifiable {
-    var id: UUID = UUID()
+struct AllPostsResponse: Codable {
+
+    var userId: Int
+    var postId: Int
     var title: String
-    var subtitle: String
+    var body: String
+    
+    enum CodingKeys: String, CodingKey {
+        case userId, title, body
+        case postId = "id"
+    }
 }

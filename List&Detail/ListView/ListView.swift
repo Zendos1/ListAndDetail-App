@@ -16,25 +16,32 @@ struct ListView: View {
     }
     
     var body: some View {
-        List(viewModel.items, id: \.id) { item in
-            CardView(title: item.title, subtitle: item.subtitle)
-        }
-        .onAppear {
-            viewModel.fetchTitles()
+        List(viewModel.items, id: \.postId) { item in
+            CardView(userId: item.userId,
+                     postId: item.postId,
+                     title: item.title,
+                     postbody: item.body)
         }
         .listStyle(.plain)
+        .task {
+            await viewModel.fetchAllPosts()
+        }
     }
 }
 
 struct CardView: View {
+    var userId: Int
+    var postId: Int
     var title: String
-    var subtitle: String
+    var postbody: String
     
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
+            Text(Constants.ListView.userIdLabel + "\(userId)")
+            Text(Constants.ListView.postIdLabel + "\(postId)")
             Text(title)
                 .font(.headline)
-            Text(subtitle)
+            Text(postbody)
                 .font(.subheadline)
         }
     }

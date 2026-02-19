@@ -7,10 +7,11 @@
 
 
 class MockApiClient: APIClientProtocol {
-    func fetchContent() -> [APIModel] {
-        [APIModel(title: "One", subtitle: "One Subtitle"),
-         APIModel(title: "Two", subtitle: "Two Subtitle"),
-         APIModel(title: "Three", subtitle: "Three Subtitle"),
-         APIModel(title: "Four", subtitle: "Four Subtitle")]
+    
+    func fetchAllPosts() async throws -> [AllPostsResponse] {
+        [AllPostsResponse(userId: 1, postId: 1, title: "One", body: "body one"),
+         AllPostsResponse(userId: 2, postId: 2, title: "Two", body: "body two"),
+         AllPostsResponse(userId: 3, postId: 3, title: "Three", body: "body three"),
+         AllPostsResponse(userId: 4, postId: 4, title: "Four", body: "body four")]
     }
 }

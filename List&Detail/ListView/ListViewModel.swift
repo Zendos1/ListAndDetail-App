@@ -12,14 +12,18 @@ import Foundation
 class ListViewModel: ObservableObject {
     
     private var apiClient: APIClientProtocol
-    @Published var items: [APIModel] = []
+    @Published var items: [AllPostsResponse] = []
     
     init(apiClient: APIClientProtocol = ApiClient()) {
         self.apiClient = apiClient
     }
     
-    func fetchTitles() {
-        items = apiClient.fetchContent()
+    func fetchAllPosts() async {
+        do {
+           items = try await apiClient.fetchAllPosts()
+        } catch {
+            fatalError("Fetch All Posts Failed ")
+        }
     }
 }
 
