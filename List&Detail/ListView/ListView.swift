@@ -10,27 +10,34 @@ import SwiftUI
 struct ListView: View {
     
     @StateObject var viewModel = ListViewModel()
+    @EnvironmentObject var router: NavigationRouter
     
     init(viewModel: ListViewModel = ListViewModel()) {
         _viewModel = .init(wrappedValue: viewModel)
     }
     
     var body: some View {
-        Group {
-            if viewModel.isLoading {
-                ProgressView().controlSize(.large)
-            } else if viewModel.items.isEmpty {
-                ContentUnavailableView(Constants.ListView.emptyStateMessage,
-                                       systemImage: Style.Images.emptyStateImage)
+        NavigationStack(path: $router.routes) {
+            Group {
+                if viewModel.isLoading {
+                    ProgressView().controlSize(.large)
+                } else if viewModel.items.isEmpty {
+                    ContentUnavailableView(Constants.ListView.emptyStateMessage,
+                                           systemImage: Style.Images.emptyStateImage)
+                }
+                else {
+                    List(viewModel.items, id: \.postId) { item in
+                        NavigationLink(value: Route.detailView(postId: item.postId),
+                                       label: { PostCardView(userId: item.userId,
+                                                             postId: item.postId,
+                                                             title: item.title,
+                                                             postbody: item.body) })
+                    }
+                    .listStyle(.plain)
+                }
             }
-            else {
-                List(viewModel.items, id: \.postId) { item in
-                    CardView(userId: item.userId,
-                             postId: item.postId,
-                             title: item.title,
-                             postbody: item.body)
-                }.listStyle(.plain)
-            }
+            .navigationTitle(Constants.ListView.navTitle)
+            .navigationDestination(for: Route.self) { $0 }
         }
         .task {
             await viewModel.fetchAllPosts()

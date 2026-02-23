@@ -12,6 +12,7 @@ struct Constants {
         static let userIdLabel = "UserId: "
         static let postIdLabel = "PostId: "
         static let emptyStateMessage = "No posts to display"
+        static let navTitle = "Posts List 📝"
     }
     
     enum ApiClient {
@@ -27,6 +28,10 @@ struct Constants {
         static let allPostsErrorAlertRetry = "Retry"
         static let unknownErrorMessage = "An unknown error has occurred."
         static let alertConfirm = "OK"
+    }
+    
+    enum PostDetail {
+        static let navTitle = "Post Detail 📖"
     }
 }
 

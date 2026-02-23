@@ -1,5 +1,5 @@
 //
-//  AlertPresenter.swift
+//  ListAlertPresenter.swift
 //  List&Detail
 //
 //  Created by mark jones on 19/02/2026.
@@ -12,7 +12,7 @@ enum AlertType {
     case unknownError
 }
 
-class AlertPresenter: ObservableObject {
+class ListAlertPresenter: ObservableObject {
     var isPresented = false
     var type: AlertType
     

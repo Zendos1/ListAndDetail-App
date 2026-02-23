@@ -17,7 +17,7 @@ class MockApiClient: APIClientProtocol {
         self.withDelay = withDelay
     }
     
-    func fetchAllPosts() async throws -> [AllPostsResponse] {
+    func fetchAllPosts() async throws -> [PostResponseModel] {
         
         if withDelay {
             try await Task.sleep(nanoseconds: 2_500_000_000)
@@ -26,19 +26,19 @@ class MockApiClient: APIClientProtocol {
         if willFail {
             throw NSError(domain: "MockApiClient", code: 1, userInfo: nil)
         } else {
-            return [AllPostsResponse(userId: 1,
+            return [PostResponseModel(userId: 1,
                                      postId: 1,
                                      title: "One title",
                                      body: "body one"),
-                    AllPostsResponse(userId: 2,
+                    PostResponseModel(userId: 2,
                                      postId: 2,
                                      title: "Two title",
                                      body: "body two"),
-                    AllPostsResponse(userId: 3,
+                    PostResponseModel(userId: 3,
                                      postId: 3,
                                      title: "Three title",
                                      body: "body three"),
-                    AllPostsResponse(userId: 4,
+                    PostResponseModel(userId: 4,
                                      postId: 4,
                                      title: "Four title",
                                      body: "body four")]

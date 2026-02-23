@@ -1,5 +1,5 @@
 //
-//  CardView.swift
+//  PostCardView.swift
 //  List&Detail
 //
 //  Created by mark jones on 19/02/2026.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CardView: View {
+struct PostCardView: View {
     var userId: Int
     var postId: Int
     var title: String

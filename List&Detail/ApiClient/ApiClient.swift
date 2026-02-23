@@ -8,7 +8,7 @@
 import Foundation
 
 protocol APIClientProtocol {
-    func fetchAllPosts() async throws -> [AllPostsResponse]
+    func fetchAllPosts() async throws -> [PostResponseModel]
 }
 
 class ApiClient: APIClientProtocol {
@@ -25,7 +25,7 @@ class ApiClient: APIClientProtocol {
         self.urlSession = urlSession
     }
     
-    func fetchAllPosts() async throws -> [AllPostsResponse] {
+    func fetchAllPosts() async throws -> [PostResponseModel] {
         let allPostsUrl = baseUrl.appendingPathComponent(Constants.ApiClient.postsEndpoint)
         let request = URLRequest(url: allPostsUrl)
         return try await makeNetworkRequest(request: request)

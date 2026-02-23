@@ -10,15 +10,18 @@ import SwiftUI
 @main
 struct List_DetailApp: App {
     
+    @StateObject var router = NavigationRouter()
+    
     var body: some Scene {
         WindowGroup {
-//            ListView()
+            ListView()
+                .environmentObject(router)
             
             /// Mocking viewmodel to test behaviours
-            let mockApiClient = MockApiClient(willFail: true,
-                                              withDelay: true)
-            let previewViewModel = ListViewModel(apiClient: mockApiClient)
-            ListView(viewModel: previewViewModel)
+//            let mockApiClient = MockApiClient(willFail: true,
+//                                              withDelay: true)
+//            let previewViewModel = ListViewModel(apiClient: mockApiClient)
+//            ListView(viewModel: previewViewModel)
         }
     }
 }

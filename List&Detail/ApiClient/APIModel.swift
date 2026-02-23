@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AllPostsResponse: Codable {
+struct PostResponseModel: Codable {
 
     var userId: Int
     var postId: Int

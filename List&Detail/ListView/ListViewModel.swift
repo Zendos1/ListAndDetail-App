@@ -12,9 +12,9 @@ import Foundation
 class ListViewModel: ObservableObject {
     
     private var apiClient: APIClientProtocol
-    @Published var items: [AllPostsResponse] = []
+    @Published var items: [PostResponseModel] = []
     @Published var isLoading = false
-    @Published var alertPresenter: AlertPresenter = .init(type: .unknownError)
+    @Published var alertPresenter: ListAlertPresenter = .init(type: .unknownError)
     
     init(apiClient: APIClientProtocol = ApiClient()) {
         self.apiClient = apiClient
