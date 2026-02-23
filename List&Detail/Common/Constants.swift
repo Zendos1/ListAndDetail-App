@@ -28,10 +28,13 @@ struct Constants {
         static let allPostsErrorAlertRetry = "Retry"
         static let unknownErrorMessage = "An unknown error has occurred."
         static let alertConfirm = "OK"
+        static let postByIdErrorMessage = "Failed to fetch post by id"
     }
     
     enum PostDetail {
         static let navTitle = "Post Detail 📖"
+        static let emptyStateMessage = "The Post did not load. Try again."
+        static let sectionHeaderTitle = "Comments: 🌎"
     }
 }
 

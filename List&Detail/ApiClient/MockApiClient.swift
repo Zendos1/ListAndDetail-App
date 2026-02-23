@@ -18,11 +18,9 @@ class MockApiClient: APIClientProtocol {
     }
     
     func fetchAllPosts() async throws -> [PostResponseModel] {
-        
         if withDelay {
             try await Task.sleep(nanoseconds: 2_500_000_000)
         }
-        
         if willFail {
             throw NSError(domain: "MockApiClient", code: 1, userInfo: nil)
         } else {
@@ -42,6 +40,20 @@ class MockApiClient: APIClientProtocol {
                                      postId: 4,
                                      title: "Four title",
                                      body: "body four")]
+        }
+    }
+    
+    func fetchPost(id: Int) async throws -> PostResponseModel {
+        if withDelay {
+            try await Task.sleep(nanoseconds: 2_500_000_000)
+        }
+        if willFail {
+            throw NSError(domain: "MockApiClient", code: 1, userInfo: nil)
+        } else {
+            return PostResponseModel(userId: 1,
+                                     postId: 1,
+                                     title: "One title",
+                                     body: "body one")
         }
     }
 }

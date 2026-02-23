@@ -24,3 +24,16 @@ struct PostCardView: View {
         }
     }
 }
+
+struct Divider: View {
+    var height: CGFloat = 3
+    
+    var body: some View {
+        VStack() {
+            Rectangle().frame(height: height)
+                .foregroundStyle(.gray.opacity(0.4))
+                .padding(.vertical, Style.Spacing.defaultVerticalSpacing)
+        }
+    }
+}
+

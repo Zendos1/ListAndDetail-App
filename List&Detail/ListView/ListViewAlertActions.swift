@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ListViewAlertActions: View {
-    var alertType: AlertType
+    var alertType: ListAlertType
     
     var body: some View {
         switch alertType {

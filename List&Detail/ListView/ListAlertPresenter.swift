@@ -7,16 +7,16 @@
 
 import Combine
 
-enum AlertType {
+enum ListAlertType {
     case fetchAllPostFailure
     case unknownError
 }
 
 class ListAlertPresenter: ObservableObject {
     var isPresented = false
-    var type: AlertType
+    var type: ListAlertType
     
-    init(type: AlertType) {
+    init(type: ListAlertType) {
         self.type = type
     }
     

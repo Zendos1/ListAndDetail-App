@@ -32,7 +32,7 @@ class ListViewModel: ObservableObject {
     }
     
     @MainActor
-    func handleError(_ type: AlertType) {
+    func handleError(_ type: ListAlertType) {
         Task {
             await MainActor.run {
                 alertPresenter = .init(type: type)

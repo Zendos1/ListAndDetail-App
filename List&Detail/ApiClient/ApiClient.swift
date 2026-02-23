@@ -9,6 +9,7 @@ import Foundation
 
 protocol APIClientProtocol {
     func fetchAllPosts() async throws -> [PostResponseModel]
+    func fetchPost(id: Int) async throws -> PostResponseModel
 }
 
 class ApiClient: APIClientProtocol {
@@ -28,6 +29,13 @@ class ApiClient: APIClientProtocol {
     func fetchAllPosts() async throws -> [PostResponseModel] {
         let allPostsUrl = baseUrl.appendingPathComponent(Constants.ApiClient.postsEndpoint)
         let request = URLRequest(url: allPostsUrl)
+        return try await makeNetworkRequest(request: request)
+    }
+    
+    func fetchPost(id: Int) async throws -> PostResponseModel {
+        let allPostsUrl = baseUrl.appendingPathComponent(Constants.ApiClient.postsEndpoint)
+        let postByID = allPostsUrl.appendingPathComponent(String(id))
+        let request = URLRequest(url: postByID)
         return try await makeNetworkRequest(request: request)
     }
     
