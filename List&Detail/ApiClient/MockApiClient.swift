@@ -56,4 +56,19 @@ class MockApiClient: APIClientProtocol {
                                      body: "body one")
         }
     }
+    
+    func fetchComments(for postId: Int) async throws -> [CommentResponseModel] {
+        if withDelay {
+            try await Task.sleep(nanoseconds: 2_500_000_000)
+        }
+        if willFail {
+            throw NSError(domain: "MockApiClient", code: 1, userInfo: nil)
+        } else {
+            return [CommentResponseModel.mock,
+                    CommentResponseModel.mock,
+                    CommentResponseModel.mock]
+        }
+    }
 }
+
+

@@ -18,6 +18,8 @@ struct Constants {
     enum ApiClient {
         static let baseURL = "https://jsonplaceholder.typicode.com"
         static let postsEndpoint = "/posts"
+        static let commentsEndpoint = "/comments"
+        static let postIdQueryKey = "postId"
         static let baseUrlFailure = "Failed to create URL from baseUrl string"
         static let badServerResponse = "Bad Server Response"
     }
@@ -33,8 +35,8 @@ struct Constants {
     
     enum PostDetail {
         static let navTitle = "Post Detail 📖"
-        static let emptyStateMessage = "The Post did not load. Try again."
         static let sectionHeaderTitle = "Comments: 🌎"
+        static let commentsEmptyStateMessage = "No comments to display"
     }
 }
 

@@ -10,27 +10,39 @@ import Combine
 class PostDetailViewModel: ObservableObject {
     
     private var apiClient: APIClientProtocol
-    private var postId: Int
-    @Published var post: PostResponseModel?
-    @Published var isLoading = false
+    @Published var post: PostResponseModel
+    @Published var isPostUpdated = false
+    @Published var comments: [CommentResponseModel] = []
+    @Published var isCommentsLoading = false
     @Published var alertPresenter: DetailAlertPresenter = .init(type: .unknownError)
     
     init(apiClient: APIClientProtocol = ApiClient(),
-         postId: Int) {
+         post: PostResponseModel) {
         self.apiClient = apiClient
-        self.postId = postId
+        self.post = post
     }
     
-    func fetchPost() async {
-        isLoading = true
+    func fetchUpdatedPost() async {
         do {
-            post = try await apiClient.fetchPost(id: postId)
-            isLoading = false
+            post = try await apiClient.fetchPost(id: post.postId)
+            try await Task.sleep(nanoseconds: 1_000_000_000)
+            isPostUpdated = true
         } catch let error {
-            isLoading = false
             handleError(error)
         }
      }
+    
+    func fetchComments() async {
+        isCommentsLoading = true
+        do {
+            try await Task.sleep(nanoseconds: 1_000_000_000)
+            comments = try await apiClient.fetchComments(for: post.postId)
+            isCommentsLoading = false
+        } catch let error {
+            isCommentsLoading = false
+            handleError(error)
+        }
+    }
     
     @MainActor func handleError(_ error: Error) {
         alertPresenter = .init(type: .fetchPostByIdFailure)

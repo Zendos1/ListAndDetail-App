@@ -19,38 +19,46 @@ struct PostDetailView: View {
     
     var body: some View {
         ScrollView {
-            if viewModel.isLoading {
-                ProgressView().controlSize(.large)
-                    .padding(.vertical, Style.Spacing.progressScrollViewPadding)
-            } else if viewModel.post == nil {
-                ContentUnavailableView(Constants.PostDetail.emptyStateMessage,
-                                       systemImage: Style.Images.emptyStateImage)
-            } else if let post = viewModel.post {
-                VStack(alignment: .leading) {
-                    PostCardView(userId: post.userId,
-                                 postId: post.postId,
-                                 title: post.title,
-                                 postbody: post.body)
-                    Divider()
-                    Section {
-                        Text(Constants.PostDetail.sectionHeaderTitle).font(Style.Fonts.titleFont)
+            VStack(alignment: .leading) {
+                PostCardView(userId: viewModel.post.userId,
+                             postId: viewModel.post.postId,
+                             title: viewModel.post.title,
+                             postbody: viewModel.post.body,
+                             isEdited: viewModel.isPostUpdated)
+                Divider()
+                Section {
+                    Text(Constants.PostDetail.sectionHeaderTitle).font(Style.Fonts.titleFont)
+                }
+                if viewModel.isCommentsLoading {
+                    ProgressView().controlSize(.large)
+                } else if viewModel.comments.isEmpty {
+                    ContentUnavailableView(Constants.PostDetail.commentsEmptyStateMessage,
+                                           systemImage: Style.Images.emptyStateImage)
+                } else {
+                    ForEach(viewModel.comments, id: \.commentId) { comment in
+                        CommentCardView(comment: comment)
                     }
                 }
             }
         }
+        .scrollIndicators(.hidden)
         .padding(.horizontal, Style.Spacing.defaultPadding)
         .navigationTitle(Constants.PostDetail.navTitle)
         .task {
-            await viewModel.fetchPost()
+            await viewModel.fetchComments()
+            await viewModel.fetchUpdatedPost()
         }
     }
 }
 
 #Preview {
-    let router = NavigationRouter()
-    let mockApiClient = MockApiClient(willFail: true, withDelay: true)
+    @Previewable @StateObject var router = NavigationRouter()
+    let mockApiClient = MockApiClient(willFail: false, withDelay: true)
+    let mockPost = PostResponseModel.mock
     let mockViewModel = PostDetailViewModel(apiClient: mockApiClient,
-                                            postId: 1)
-    PostDetailView(viewModel: mockViewModel)
+                                            post: mockPost)
+    NavigationStack(path: $router.routes) {
+        PostDetailView(viewModel: mockViewModel)
+            .environmentObject(router)
+    }
 }
-

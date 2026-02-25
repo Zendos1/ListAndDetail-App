@@ -10,6 +10,7 @@ import Foundation
 protocol APIClientProtocol {
     func fetchAllPosts() async throws -> [PostResponseModel]
     func fetchPost(id: Int) async throws -> PostResponseModel
+    func fetchComments(for postId: Int) async throws -> [CommentResponseModel]
 }
 
 class ApiClient: APIClientProtocol {
@@ -26,6 +27,8 @@ class ApiClient: APIClientProtocol {
         self.urlSession = urlSession
     }
     
+    // MARK: Post requests
+    
     func fetchAllPosts() async throws -> [PostResponseModel] {
         let allPostsUrl = baseUrl.appendingPathComponent(Constants.ApiClient.postsEndpoint)
         let request = URLRequest(url: allPostsUrl)
@@ -36,6 +39,17 @@ class ApiClient: APIClientProtocol {
         let allPostsUrl = baseUrl.appendingPathComponent(Constants.ApiClient.postsEndpoint)
         let postByID = allPostsUrl.appendingPathComponent(String(id))
         let request = URLRequest(url: postByID)
+        return try await makeNetworkRequest(request: request)
+    }
+    
+    // MARK: Comment Requests
+    
+    func fetchComments(for postId: Int) async throws -> [CommentResponseModel] {
+        var commentsUrl = baseUrl.appendingPathComponent(Constants.ApiClient.commentsEndpoint)
+        let queryItems = [URLQueryItem(name: Constants.ApiClient.postIdQueryKey,
+                                       value: String(postId))]
+        commentsUrl = commentsUrl.appending(queryItems: queryItems)
+        let request = URLRequest(url: commentsUrl)
         return try await makeNetworkRequest(request: request)
     }
     

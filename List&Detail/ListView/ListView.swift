@@ -27,7 +27,7 @@ struct ListView: View {
                 }
                 else {
                     List(viewModel.items, id: \.postId) { item in
-                        NavigationLink(value: Route.detailView(postId: item.postId),
+                        NavigationLink(value: Route.detailView(post: item),
                                        label: { PostCardView(userId: item.userId,
                                                              postId: item.postId,
                                                              title: item.title,
@@ -52,5 +52,9 @@ struct ListView: View {
 #Preview {
     let mockApiClient = MockApiClient()
     let previewViewModel = ListViewModel(apiClient: mockApiClient)
-    ListView(viewModel: previewViewModel)
+    let router = NavigationRouter()
+    
+    return ListView(viewModel: previewViewModel)
+        .environmentObject(router)
 }
+

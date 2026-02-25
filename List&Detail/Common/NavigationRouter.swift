@@ -9,14 +9,14 @@ import SwiftUI
 import Combine
 
 enum Route: Hashable {
-    case detailView(postId: Int)
+    case detailView(post: PostResponseModel)
 }
 
 extension Route: View {
         var body: some View {
         switch self {
-        case .detailView(postId: let postId):
-            let viewModel = PostDetailViewModel(postId: postId)
+        case .detailView(post: let post):
+            let viewModel = PostDetailViewModel(post: post)
             PostDetailView(viewModel: viewModel)
         }
     }
