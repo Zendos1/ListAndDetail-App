@@ -1,8 +1,7 @@
 # List & Detail App
 
 <p align="left" style="display: flex; align-items: center; gap: 12px;">
-  <img src="images/logo.png" alt="List&Detail App Icon" width="96" />
-  <span style="font-size: 28px; font-weight: 700;"> List & Detail App </span>
+  <img src="images/logo.png" alt="List&Detail App Icon" width="126" />
 </p>
 
 **A simple List & Detail SwiftUI App to accompany video series.**
