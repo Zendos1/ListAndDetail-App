@@ -14,9 +14,21 @@ struct Style {
     }
     
     enum Spacing {
-        static let defaultVerticalSpacing: CGFloat = 4
+        static let standard: CGFloat = 4
+        static let large: CGFloat = 8
+        
         static let defaultPadding: CGFloat = 16
         static let progressScrollViewPadding: CGFloat = 80
+    }
+    
+    enum CornerRadius {
+        static let standard: CGFloat = 10
+    }
+    
+    enum Opacity {
+        static let light: Double = 0.15
+        static let standard: Double = 0.5
+        static let heavy: Double = 0.75
     }
     
     enum TextSize {

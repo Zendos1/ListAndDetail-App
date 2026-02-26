@@ -11,6 +11,10 @@ struct Constants {
     enum ListView {
         static let userIdLabel = "UserId: "
         static let postIdLabel = "PostId: "
+        
+        static let titleLabel = "Title:"
+        static let bodyLabel = "Body:"
+        
         static let emptyStateMessage = "No posts to display"
         static let navTitle = "Posts List 📝"
     }
@@ -37,6 +41,11 @@ struct Constants {
         static let navTitle = "Post Detail 📖"
         static let sectionHeaderTitle = "Comments: 🌎"
         static let commentsEmptyStateMessage = "No comments to display"
+        
+        static let commentNameLabel = "Name:"
+        static let commentEmailLabel = "Email:"
+        static let commentBodyLabel = "Body:"
+        static let commentIdLabel = "#"
     }
 }
 
