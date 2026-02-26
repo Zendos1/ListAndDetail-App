@@ -1,17 +1,9 @@
 
-<table>
-  <tr>
-    <td>
-      <img src="images/logo.png" alt="List&Detail App Icon" width="72">
-    </td>
-    <td style="vertical-align: middle; padding-left: 12px;">
-      <span style="font-size: 28px; font-weight: 700;">List & Detail App</span>
-    </td>
-  </tr>
-</table>
+<p align="left">
+  <img src="images/logo.png" alt="BookPal App Icon" width="136" />
+</p>
 
-
-<p><strong>A simple List & Detail SwiftUI App to accompany video series.</strong></p>
+**A simple List & Detail SwiftUI App to accompany video series.**
 
 <hr>
 
